@@ -5,7 +5,7 @@ Last updated: Oct 1, 2026. Read this first if you are picking this project up in
 ## What this is
 Meagan Jenkins's portfolio, live at **https://meaganjenkins.work**. It replaced a Wix site. It is a static site built with Vite, React and TypeScript, in the style of the "trail guide" About Me page (altimeter header, topographic background, Trail mode and Spooky mode).
 
-- Repo: https://github.com/starinthemargin-mj/meagan-jenkins-work (public, personal GitHub account `starinthemargin-mj`)
+- Repo: https://github.com/starinthemargin/meagan-jenkins-work (public, personal GitHub account `starinthemargin`; transferred from `starinthemargin-mj` on 2026-11-02)
 - The app lives in `meagan-jenkins-about-me/`. The repo root only holds `.github/`, `.gitignore` and this file.
 
 ## Day to day
@@ -18,7 +18,7 @@ npm run lint
 ```
 **To publish a change:** commit and push to `main`. GitHub Actions (`.github/workflows/deploy.yml`) builds and deploys to GitHub Pages in about 30 seconds. No manual upload is needed.
 
-**Git identity:** commits in this repo use GitHub's private noreply address (`272865000+starinthemargin-mj@users.noreply.github.com`), set for this repo only. The computer's global Git email is a work (SmarterDx) address, so do not commit from a different clone without setting a local email first. Push with the personal GitHub account (`gh auth switch` or `gh auth login`).
+**Git identity:** commits in this repo use GitHub's private noreply address (`152535150+starinthemargin@users.noreply.github.com`), set for this repo only. The computer's global Git email is a work (SmarterDx) address, so do not commit from a different clone without setting a local email first. Push with the personal GitHub account (`gh auth switch` or `gh auth login`).
 
 ## Where things live
 | What | Where |
@@ -46,7 +46,7 @@ Use `*asterisks*` around a word in headings in `content.ts` to show it in the ac
 - **Registrar and DNS:** Porkbun. The domain was originally on Wix's nameservers. It was moved to Porkbun's nameservers on Oct 1, 2026.
 - **DNS records at Porkbun:**
   - four `A` records for the bare domain: `185.199.108.153`, `185.199.109.153`, `185.199.110.153`, `185.199.111.153`
-  - `CNAME` `www` pointing to `starinthemargin-mj.github.io`
+  - `CNAME` `www` pointing to `starinthemargin.github.io`
   - **Email (do not delete):** two `MX` records (`fwd1.porkbun.com`, `fwd2.porkbun.com`) and an SPF `TXT` record (`v=spf1 include:_spf.porkbun.com ~all`). These make `hello@meaganjenkins.work` forward through Porkbun.
 - Old Wix page addresses (like `/elearning`) were deliberately not redirected, since there are no known links to them.
 
