@@ -115,8 +115,8 @@ export function Work({ tab, open }: { tab?: string; open?: string }) {
                 <h2>{c.title}</h2>
                 {c.image && <Figure image={c.image} />}
                 <p>{c.about}</p>
-                {c.objectivesIntro && <p className="muted">{c.objectivesIntro}</p>}
                 <h3 className="small-head">Learning objectives</h3>
+                {c.objectivesIntro && <p className="muted">{c.objectivesIntro}</p>}
                 <ul className="dot-list">
                   {c.objectives.map((o) => (
                     <li key={o}>{o}</li>

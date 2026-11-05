@@ -1,6 +1,6 @@
 # Handoff notes: meaganjenkins.work
 
-Last updated: Oct 1, 2026. Read this first if you are picking this project up in a new chat or on a new machine.
+Last updated: Nov 4, 2026. Read this first if you are picking this project up in a new chat or on a new machine.
 
 ## What this is
 Meagan Jenkins's portfolio, live at **https://meaganjenkins.work**. It replaced a Wix site. It is a static site built with Vite, React and TypeScript, in the style of the "trail guide" About Me page (altimeter header, topographic background, Trail mode and Spooky mode).
@@ -30,14 +30,15 @@ npm run lint
 | Tree scavenger hunt | `src/hunt.tsx` |
 | Images | `public/images/` |
 | PDF guides | `public/guides/` (first-page previews are in `public/images/guide-*.jpg`) |
-| Hosted eLearning course | `public/courses/drug-diversion/` (an Articulate Rise web export) |
+| Hosted eLearning course | `public/courses/driftboard/`: a hand-built HTML, CSS and JS mock course for a fictional product (no build step). It is the only course on the site. Its design brief, accessibility notes and early prototype are in `docs/driftboard/` (not published). |
 
 Use `*asterisks*` around a word in headings in `content.ts` to show it in the accent color. Paths to images and files are relative (no leading `/`) on purpose, so the site works from any folder. `vite.config.ts` sets `base: './'`.
 
 ## How to add or change things
 - **Video:** add `vimeoId` (the number in the Vimeo URL) to the entry in `videos`. Also save a poster image as `public/images/video-<ID>.jpg`. The posters are saved Vimeo thumbnails (from `https://vimeo.com/api/oembed.json?url=https://vimeo.com/<ID>&width=960`). The Vimeo player loads only after a click.
 - **Guide:** copy the PDF into `public/guides/`, make a preview image in `public/images/` (the existing ones were made with `sips -s format png -Z 1000 file.pdf`), and add an entry to `guides`.
-- **Course:** export the course as a web export, copy its folder into `public/courses/<name>/`, and set `riseUrl` on the course to `courses/<name>/index.html`.
+- **Course:** put the course folder in `public/courses/<name>/`, add a card image in `public/images/`, and set `riseUrl` on the course to `courses/<name>/index.html` (the field name is historical; any path or link works).
+- **Editing the Driftboard course:** `index.html` tags every script and stylesheet with `?v=<version>`. Change that version string every time you edit a course file and publish, or browsers (and GitHub Pages) may keep serving the old files.
 - **Case study image:** set `image` on the case study (`kind`: `logo`, `shot` or `art`). All three kinds share one look: border, flat purple shadow, rounded corners.
 - **Hidden trees:** 8 hidden trees are spread across the site, and `TOTAL_CAIRNS` in `src/hunt.tsx` must match the number of `<Cairn id="...">` elements. Current ids: `home-hero`, `home-card`, `work-case`, `work-video`, `tech-pack`, `about-hero`, `about-signs`, `about-route`. The counter and progress are saved in the browser's localStorage.
 
@@ -56,10 +57,10 @@ Use `*asterisks*` around a word in headings in `content.ts` to show it in the ac
 - The "Two truths and a lie" game was removed. A hidden-tree scavenger hunt replaced it.
 - The Tech Stack page has an "AI & building tools" group (Claude, ChatGPT, Cursor, GitHub, WellSaid Labs, ElevenLabs) with a tongue-in-cheek "I'm not a coder" note.
 - The Vimeo videos show a black box when played from `localhost` but work on the real domain. The "Not loading? Watch on Vimeo" link is the fallback.
+- The Protenus drug diversion course was removed from the site on Nov 4, 2026 and replaced by the Driftboard mock course. The old files are in git history. Nothing is left in AWS S3.
 
 ## Open items
 - [ ] Confirm `https://meaganjenkins.work` and `https://www.meaganjenkins.work` load the new site everywhere. Some networks (for example a work VPN) may serve stale DNS for a few hours after the switch.
 - [ ] Send a test email to `hello@meaganjenkins.work` to confirm forwarding still works.
 - [ ] Cancel the Wix plan after saving anything wanted from it. Keep the domain registered at Porkbun.
-- [ ] Delete the old copy of the drug diversion course in the AWS S3 bucket `mjenkins-portfolio` once the hosted copy is confirmed working, then check that no AWS charges remain.
 - [ ] Optional: larger originals for the case study images, which are about 1,000 px wide.

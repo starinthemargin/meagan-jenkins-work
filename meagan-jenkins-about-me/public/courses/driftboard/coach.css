@@ -1,0 +1,45 @@
+/* Spotlight and coach card */
+.coach-layer { position: fixed; inset: 0; z-index: 50; pointer-events: none; }
+.coach-block { position: fixed; background: transparent; pointer-events: auto; }
+.coach-spot {
+  position: fixed; border-radius: 12px; pointer-events: none;
+  box-shadow: 0 0 0 3px var(--coral), 0 0 0 7px rgba(255, 107, 74, .28), 0 0 0 100vmax rgba(31, 27, 46, .58);
+  transition: left .25s ease, top .25s ease, width .25s ease, height .25s ease;
+}
+.coach-card {
+  position: fixed; width: 340px; background: #fff; border-radius: 16px; padding: 16px 18px 14px;
+  box-shadow: 0 18px 44px rgba(31, 27, 46, .32); pointer-events: auto;
+  transition: left .25s ease, top .25s ease;
+  font-family: 'Plus Jakarta Sans', system-ui, sans-serif; color: var(--ink);
+  max-height: calc(100vh - 24px); overflow-y: auto;
+}
+.coach-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
+.coach-badge { background: var(--ink); color: #fff; font-size: 11px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; padding: 3px 10px; border-radius: 99px; }
+.coach-step { font-size: 12.5px; font-weight: 700; color: var(--muted); }
+.coach-bar { height: 4px; background: #EFE7E2; border-radius: 99px; margin-bottom: 12px; overflow: hidden; }
+.coach-bar span { display: block; height: 100%; background: var(--coral); border-radius: 99px; transition: width .3s ease; width: 0; }
+.coach-text { margin: 0; font-size: 15.5px; font-weight: 600; line-height: 1.5; }
+.coach-praise { display: none; gap: 10px; align-items: flex-start; margin-bottom: 12px; padding: 10px 12px; border-radius: 10px; font-size: 14px; font-weight: 600; background: var(--ok-tint); color: #0A4F35; }
+.coach-praise.show { display: flex; }
+.coach-praise svg { flex: none; margin-top: 2px; }
+.coach-fb { display: none; gap: 10px; align-items: flex-start; margin-top: 12px; padding: 11px 12px; border-radius: 10px; font-size: 14px; font-weight: 500; line-height: 1.45; }
+.coach-fb.show { display: flex; }
+.coach-fb svg { flex: none; margin-top: 2px; }
+.coach-fb.try, .coach-fb.nudge { background: var(--violet-tint); color: #2E2380; }
+.coach-foot { margin-top: 12px; display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+.coach-nav { border: 0; background: none; font: inherit; font-weight: 700; font-size: 13.5px; color: var(--muted); cursor: pointer; padding: 4px 0; }
+.coach-nav:hover { color: var(--ink); }
+.coach-hint { margin-left: auto; }
+.coach-foot[hidden], .coach-nav[hidden], .coach-hint[hidden] { display: none; }
+.coach-hint { border: 0; background: none; color: var(--violet-dark); font: inherit; font-weight: 700; font-size: 13.5px; padding: 4px 0; cursor: pointer; text-decoration: underline; text-underline-offset: 3px; }
+.coach-hint-text { margin: 6px 0 0; font-size: 14px; color: var(--muted); display: grid; gap: 6px; }
+.coach-hint-text[hidden] { display: none; }
+.coach-go { margin-top: 14px; width: 100%; border: 0; border-radius: 10px; padding: 12px 16px; font: inherit; font-weight: 800; background: var(--coral); color: var(--ink); cursor: pointer; }
+.coach-go:hover { background: #FF8268; }
+.coach-card :focus-visible { box-shadow: var(--focus); border-radius: 8px; outline: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .coach-spot, .coach-card, .coach-bar span { transition: none; }
+}
+
+.coach-text strong, .coach-praise strong, .coach-fb strong, .coach-hint-text strong { font-weight: 800; }

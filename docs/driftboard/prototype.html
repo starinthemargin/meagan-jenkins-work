@@ -1,0 +1,342 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Driftboard prototype</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1F1B2E;
+    --ink-2: #2B2640;
+    --ink-3: #3A3454;
+    --coral: #FF6B4A;
+    --coral-dark: #E5522F;
+    --coral-tint: #FFE1D6;
+    --violet: #7A5CFA;
+    --violet-tint: #ECE7FF;
+    --paper: #FBF7F5;
+    --card: #FFFFFF;
+    --line: #EBDDD6;
+    --muted: #6B6478;
+    --ok: #1F9D6B;
+    --ok-tint: #DDF3EA;
+    --warn-tint: #FFF1CC;
+    --radius: 12px;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; height: 100%; }
+  body {
+    font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+    background: var(--paper);
+    color: var(--ink);
+    font-size: 14px;
+    line-height: 1.45;
+  }
+  button { font: inherit; cursor: pointer; }
+  .app { display: grid; grid-template-columns: 220px 1fr; min-height: 100vh; }
+
+  /* sidebar */
+  .side { background: var(--ink); color: #fff; padding: 20px 14px; display: flex; flex-direction: column; gap: 4px; }
+  .brand { display: flex; align-items: center; gap: 10px; padding: 4px 8px 20px; font-weight: 700; font-size: 18px; letter-spacing: -0.01em; }
+  .nav { display: flex; align-items: center; gap: 10px; padding: 9px 10px; border-radius: 8px; color: #C9C4DA; background: none; border: 0; text-align: left; width: 100%; font-weight: 500; }
+  .nav:hover { background: var(--ink-2); color: #fff; }
+  .nav.active { background: var(--ink-3); color: #fff; }
+  .nav svg { width: 18px; height: 18px; flex: none; }
+  .side-label { font-size: 11px; text-transform: uppercase; letter-spacing: .08em; color: #8F89A6; padding: 18px 10px 6px; }
+  .side-foot { margin-top: auto; display: flex; align-items: center; gap: 10px; padding: 10px; border-top: 1px solid var(--ink-3); color: #C9C4DA; font-size: 13px; }
+
+  /* main */
+  .main { display: flex; flex-direction: column; min-width: 0; }
+  .top { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 18px 28px; border-bottom: 1px solid var(--line); background: var(--card); }
+  .top h1 { margin: 0; font-size: 20px; letter-spacing: -0.01em; }
+  .crumbs { color: var(--muted); font-size: 12px; margin-bottom: 2px; }
+  .pill-row { display: flex; align-items: center; gap: 8px; }
+  .avatars { display: flex; }
+  .av { width: 28px; height: 28px; border-radius: 50%; display: grid; place-items: center; font-size: 11px; font-weight: 700; color: #fff; border: 2px solid var(--card); margin-left: -6px; }
+  .avatars .av:first-child { margin-left: 0; }
+  .btn { border-radius: 8px; padding: 8px 14px; font-weight: 600; border: 1px solid var(--line); background: var(--card); color: var(--ink); }
+  .btn:hover { border-color: #D9C6BC; }
+  .btn.primary { background: var(--coral); border-color: var(--coral); color: #fff; }
+  .btn.primary:hover { background: var(--coral-dark); border-color: var(--coral-dark); }
+  .btn.ghost { border-color: transparent; background: none; color: var(--muted); }
+  .tabs { display: flex; gap: 4px; padding: 0 28px; background: var(--card); border-bottom: 1px solid var(--line); }
+  .tab { padding: 12px 14px; border: 0; background: none; color: var(--muted); font-weight: 600; border-bottom: 2px solid transparent; }
+  .tab.active { color: var(--ink); border-bottom-color: var(--coral); }
+
+  .screen { display: none; padding: 24px 28px 40px; }
+  .screen.active { display: block; }
+
+  /* board */
+  .board { display: grid; grid-template-columns: repeat(4, minmax(210px, 1fr)); gap: 16px; align-items: start; overflow-x: auto; }
+  .col { background: #F4EDE8; border-radius: var(--radius); padding: 12px; min-height: 360px; }
+  .col-head { display: flex; align-items: center; justify-content: space-between; padding: 2px 4px 10px; font-weight: 700; font-size: 13px; }
+  .count { background: var(--card); color: var(--muted); font-size: 11px; border-radius: 99px; padding: 1px 8px; font-weight: 600; }
+  .task { background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 12px; margin-bottom: 10px; box-shadow: 0 1px 0 rgba(31,27,46,.03); }
+  .task:hover { border-color: #D9C6BC; }
+  .task h3 { margin: 0 0 8px; font-size: 13.5px; font-weight: 600; line-height: 1.35; }
+  .tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 10px; }
+  .tag { font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 99px; background: var(--violet-tint); color: #4A33C4; }
+  .tag.high { background: var(--coral-tint); color: #9C2F12; }
+  .tag.low { background: #EDEBF2; color: #5B5470; }
+  .tag.late { background: var(--warn-tint); color: #7A5600; }
+  .meta { display: flex; align-items: center; justify-content: space-between; color: var(--muted); font-size: 12px; }
+  .meta .av { width: 22px; height: 22px; font-size: 10px; margin: 0; border: 0; }
+  .bolt { display: inline-flex; align-items: center; gap: 4px; color: var(--coral-dark); font-weight: 600; font-size: 11px; }
+
+  /* rule builder */
+  .builder { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 24px; align-items: start; }
+  .panel { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 20px; }
+  .panel h2 { margin: 0 0 4px; font-size: 16px; letter-spacing: -0.01em; }
+  .panel .sub { margin: 0 0 18px; color: var(--muted); font-size: 13px; }
+  .rule-name { width: 100%; border: 1px solid var(--line); border-radius: 8px; padding: 10px 12px; font: inherit; font-weight: 600; margin-bottom: 20px; background: var(--paper); }
+  .step { position: relative; padding-left: 44px; padding-bottom: 20px; }
+  .step:last-of-type { padding-bottom: 0; }
+  .step::before { content: ''; position: absolute; left: 15px; top: 34px; bottom: 0; width: 2px; background: var(--line); }
+  .step:last-of-type::before { display: none; }
+  .badge { position: absolute; left: 0; top: 0; width: 32px; height: 32px; border-radius: 50%; display: grid; place-items: center; font-weight: 700; font-size: 12px; color: #fff; }
+  .badge.when { background: var(--ink); }
+  .badge.if { background: var(--violet); }
+  .badge.then { background: var(--coral); }
+  .step-title { font-weight: 700; font-size: 13px; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); margin-bottom: 8px; line-height: 32px; }
+  .block { display: flex; align-items: center; gap: 10px; border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px; background: var(--paper); margin-bottom: 8px; }
+  .block strong { font-weight: 600; }
+  .block .chip { margin-left: auto; font-size: 12px; color: var(--muted); background: var(--card); border: 1px solid var(--line); border-radius: 6px; padding: 3px 8px; }
+  .block.add { border-style: dashed; color: var(--muted); background: none; cursor: pointer; }
+  .block.add:hover { border-color: var(--coral); color: var(--coral-dark); }
+  .ico { width: 28px; height: 28px; border-radius: 8px; display: grid; place-items: center; flex: none; }
+  .ico svg { width: 16px; height: 16px; }
+  .ico.when { background: #E6E3EF; color: var(--ink); }
+  .ico.then { background: var(--coral-tint); color: var(--coral-dark); }
+  .ico.if { background: var(--violet-tint); color: #4A33C4; }
+  .builder-actions { display: flex; gap: 10px; margin-top: 22px; padding-top: 18px; border-top: 1px solid var(--line); }
+
+  /* test */
+  .test-card { display: flex; align-items: center; gap: 10px; padding: 10px 0; border-bottom: 1px solid var(--line); }
+  .test-card:last-child { border-bottom: 0; }
+  .test-card .name { font-weight: 600; font-size: 13px; }
+  .test-card .why { color: var(--muted); font-size: 12px; }
+  .result { margin-left: auto; font-size: 12px; font-weight: 700; padding: 3px 10px; border-radius: 99px; background: #EDEBF2; color: #5B5470; white-space: nowrap; }
+  .result.fired { background: var(--ok-tint); color: #0E6B47; }
+  .result.skipped { background: var(--warn-tint); color: #7A5600; }
+  .log { margin-top: 20px; }
+  .log h3 { margin: 0 0 8px; font-size: 13px; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); }
+  .log-row { display: flex; gap: 10px; font-size: 12.5px; padding: 8px 10px; border-radius: 8px; background: var(--paper); margin-bottom: 6px; }
+  .log-row time { color: var(--muted); flex: none; font-variant-numeric: tabular-nums; }
+  .empty { color: var(--muted); font-size: 13px; padding: 6px 0; }
+  .note { margin: 24px 0 0; color: var(--muted); font-size: 12px; }
+
+  @media (max-width: 900px) {
+    .app { grid-template-columns: 1fr; }
+    .side { flex-direction: row; align-items: center; padding: 10px 14px; overflow-x: auto; }
+    .side .brand { padding: 0 12px 0 0; }
+    .side-label, .side-foot { display: none; }
+    .builder { grid-template-columns: 1fr; }
+    .top, .tabs, .screen { padding-left: 16px; padding-right: 16px; }
+  }
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="side">
+    <div class="brand">
+      <svg width="30" height="30" viewBox="0 0 32 32" aria-hidden="true">
+        <rect width="32" height="32" rx="9" fill="#2B2640"/>
+        <path d="M5 19c3-6 6-6 9-2s6 4 9-2" fill="none" stroke="#FBF7F5" stroke-width="2.6" stroke-linecap="round"/>
+        <circle cx="25" cy="11" r="3.2" fill="#FF6B4A"/>
+      </svg>
+      Driftboard
+    </div>
+    <button class="nav active" type="button">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="5" height="16" rx="1.5"/><rect x="10" y="4" width="5" height="10" rx="1.5"/><rect x="17" y="4" width="4" height="13" rx="1.5"/></svg>
+      Boards
+    </button>
+    <button class="nav" type="button">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+      My work
+    </button>
+    <button class="nav" type="button">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10M10 20V4M16 20v-8M22 20H2"/></svg>
+      Reports
+    </button>
+    <div class="side-label">Workspace</div>
+    <button class="nav" type="button">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.5"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6M17 11a3 3 0 100-6M21 20c0-2.4-1.5-4.4-3.6-5.4"/></svg>
+      Team
+    </button>
+    <button class="nav" type="button">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 00.3 1.8l.1.1a2 2 0 11-2.8 2.8l-.1-.1a1.7 1.7 0 00-1.8-.3 1.7 1.7 0 00-1 1.5V21a2 2 0 11-4 0v-.1a1.7 1.7 0 00-1.1-1.5 1.7 1.7 0 00-1.8.3l-.1.1a2 2 0 11-2.8-2.8l.1-.1a1.7 1.7 0 00.3-1.8 1.7 1.7 0 00-1.5-1H3a2 2 0 110-4h.1a1.7 1.7 0 001.5-1.1 1.7 1.7 0 00-.3-1.8l-.1-.1a2 2 0 112.8-2.8l.1.1a1.7 1.7 0 001.8.3H9a1.7 1.7 0 001-1.5V3a2 2 0 114 0v.1a1.7 1.7 0 001 1.5 1.7 1.7 0 001.8-.3l.1-.1a2 2 0 112.8 2.8l-.1.1a1.7 1.7 0 00-.3 1.8V9a1.7 1.7 0 001.5 1H21a2 2 0 110 4h-.1a1.7 1.7 0 00-1.5 1z"/></svg>
+      Settings
+    </button>
+    <div class="side-foot">
+      <span class="av" style="background:#7A5CFA;margin:0;border:0">YO</span>
+      You
+    </div>
+  </aside>
+
+  <div class="main">
+    <header class="top">
+      <div>
+        <div class="crumbs">Education team / Boards</div>
+        <h1>Learning content pipeline</h1>
+      </div>
+      <div class="pill-row">
+        <div class="avatars" aria-label="Team members">
+          <span class="av" style="background:#7A5CFA">AM</span>
+          <span class="av" style="background:#FF6B4A">JT</span>
+          <span class="av" style="background:#1F9D6B">RS</span>
+          <span class="av" style="background:#3A3454">+4</span>
+        </div>
+        <button class="btn" type="button">Share</button>
+        <button class="btn primary" type="button">New task</button>
+      </div>
+    </header>
+
+    <nav class="tabs" role="tablist">
+      <button class="tab active" role="tab" data-screen="board" type="button">Board</button>
+      <button class="tab" role="tab" data-screen="rules" type="button">Automations</button>
+    </nav>
+
+    <section class="screen active" id="screen-board" aria-label="Board">
+      <div class="board">
+        <div class="col">
+          <div class="col-head">Draft <span class="count">2</span></div>
+          <article class="task"><h3>Admin onboarding course: module 3</h3><div class="tags"><span class="tag">Course</span><span class="tag high">High</span></div><div class="meta"><span>Due Nov 12</span><span class="av" style="background:#7A5CFA">AM</span></div></article>
+          <article class="task"><h3>Quick reference: reports glossary</h3><div class="tags"><span class="tag">Job aid</span><span class="tag low">Low</span></div><div class="meta"><span>Due Nov 20</span><span class="av" style="background:#FF6B4A">JT</span></div></article>
+        </div>
+        <div class="col">
+          <div class="col-head">SME review <span class="count">2</span></div>
+          <article class="task"><h3>Getting started video script</h3><div class="tags"><span class="tag">Video</span><span class="tag high">High</span><span class="tag late">Overdue</span></div><div class="meta"><span class="bolt">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M13 2L4 14h6l-1 8 9-12h-6z"/></svg> Automated</span><span class="av" style="background:#1F9D6B">RS</span></div></article>
+          <article class="task"><h3>Workflow basics course: assessment</h3><div class="tags"><span class="tag">Course</span><span class="tag">Medium</span></div><div class="meta"><span>Due Nov 10</span><span class="av" style="background:#7A5CFA">AM</span></div></article>
+        </div>
+        <div class="col">
+          <div class="col-head">Approved <span class="count">1</span></div>
+          <article class="task"><h3>Integrations deep dive course</h3><div class="tags"><span class="tag">Course</span><span class="tag high">High</span></div><div class="meta"><span>Approved Nov 3</span><span class="av" style="background:#FF6B4A">JT</span></div></article>
+        </div>
+        <div class="col">
+          <div class="col-head">Published <span class="count">1</span></div>
+          <article class="task"><h3>Navigating your dashboard</h3><div class="tags"><span class="tag">Video</span><span class="tag low">Low</span></div><div class="meta"><span>Live Oct 28</span><span class="av" style="background:#1F9D6B">RS</span></div></article>
+        </div>
+      </div>
+      <p class="note">Prototype: select Automations to see the rule builder.</p>
+    </section>
+
+    <section class="screen" id="screen-rules" aria-label="Automations">
+      <div class="builder">
+        <div class="panel">
+          <h2>New rule</h2>
+          <p class="sub">Tell Driftboard what to watch for, and what to do about it.</p>
+          <input class="rule-name" type="text" value="Assign reviewer when a course enters SME review" aria-label="Rule name">
+
+          <div class="step">
+            <span class="badge when">1</span>
+            <div class="step-title">When</div>
+            <div class="block">
+              <span class="ico when"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+              <span><strong>A task</strong> moves to <strong>SME review</strong></span>
+              <span class="chip">Trigger</span>
+            </div>
+          </div>
+
+          <div class="step">
+            <span class="badge if">2</span>
+            <div class="step-title">Only if</div>
+            <div class="block add" role="button" tabindex="0">
+              <span class="ico if"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span>
+              Add a condition (optional)
+            </div>
+          </div>
+
+          <div class="step">
+            <span class="badge then">3</span>
+            <div class="step-title">Then</div>
+            <div class="block">
+              <span class="ico then"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-7 8-7s8 3 8 7"/></svg></span>
+              <span>Assign to <strong>Subject matter expert</strong></span>
+              <span class="chip">Action</span>
+            </div>
+            <div class="block">
+              <span class="ico then"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg></span>
+              <span>Set due date to <strong>2 days</strong> from today</span>
+              <span class="chip">Action</span>
+            </div>
+            <div class="block add" role="button" tabindex="0">
+              <span class="ico then"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span>
+              Add an action
+            </div>
+          </div>
+
+          <div class="builder-actions">
+            <button class="btn primary" type="button" id="run-test">Run test</button>
+            <button class="btn" type="button">Save rule</button>
+            <button class="btn ghost" type="button">Cancel</button>
+          </div>
+        </div>
+
+        <div>
+          <div class="panel">
+            <h2>Test this rule</h2>
+            <p class="sub">See what would happen to four sample tasks before you turn the rule on.</p>
+            <div id="tests">
+              <div class="test-card"><div><div class="name">Admin onboarding course: module 3</div><div class="why">Moving to SME review</div></div><span class="result" data-id="0">Not run</span></div>
+              <div class="test-card"><div><div class="name">Quick reference: reports glossary</div><div class="why">Staying in Draft</div></div><span class="result" data-id="1">Not run</span></div>
+              <div class="test-card"><div><div class="name">Integrations deep dive course</div><div class="why">Staying in Approved</div></div><span class="result" data-id="2">Not run</span></div>
+              <div class="test-card"><div><div class="name">Navigating your dashboard</div><div class="why">Moving to SME review</div></div><span class="result" data-id="3">Not run</span></div>
+            </div>
+          </div>
+          <div class="panel log">
+            <h3>Activity log</h3>
+            <div id="log"><div class="empty">Run a test to see what the rule would do.</div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>
+
+<script>
+  document.querySelectorAll('.tab').forEach(function (t) {
+    t.addEventListener('click', function () {
+      document.querySelectorAll('.tab').forEach(function (x) { x.classList.remove('active'); });
+      document.querySelectorAll('.screen').forEach(function (x) { x.classList.remove('active'); });
+      t.classList.add('active');
+      document.getElementById('screen-' + t.dataset.screen).classList.add('active');
+    });
+  });
+
+  var outcomes = [
+    { fired: true,  text: 'Would fire' },
+    { fired: false, text: 'Would not fire' },
+    { fired: false, text: 'Would not fire' },
+    { fired: true,  text: 'Would fire' }
+  ];
+  var logs = [
+    'Assigned "Admin onboarding course: module 3" to a subject matter expert and set the due date 2 days out.',
+    'Assigned "Navigating your dashboard" to a subject matter expert and set the due date 2 days out.'
+  ];
+  document.getElementById('run-test').addEventListener('click', function () {
+    document.querySelectorAll('.result').forEach(function (r) {
+      var o = outcomes[Number(r.dataset.id)];
+      r.textContent = o.text;
+      r.className = 'result ' + (o.fired ? 'fired' : 'skipped');
+    });
+    var log = document.getElementById('log');
+    log.innerHTML = '';
+    logs.forEach(function (l, i) {
+      var row = document.createElement('div');
+      row.className = 'log-row';
+      var t = document.createElement('time');
+      t.textContent = '9:0' + (i + 1) + ' AM';
+      var s = document.createElement('span');
+      s.textContent = l;
+      row.appendChild(t);
+      row.appendChild(s);
+      log.appendChild(row);
+    });
+  });
+</script>
+</body>
+</html>

@@ -35,7 +35,8 @@ export const copy = {
     title: 'Programs, *courses,* and content.',
     intro: 'Start with the case studies for the strategy. The other tabs hold the hands-on work.',
     elearningNote: [
-      "Most of the eLearning I've built is training for proprietary software, so it lives behind customer and company logins and I can't share it publicly. Over the years that has included role-based courses, learning paths, and assessments built in Articulate 360 and Captivate, for customers, internal teams, and global audiences.",
+      "Most of the eLearning I've built is training for proprietary software, so it lives behind customer and company logins, and I can't share it publicly. Over the years, that has included role-based courses, learning paths, and assessments built in Articulate 360 and Captivate, for customers, internal teams, and global audiences.",
+      "To show how I work today, this is a mock course for a fictional product. Nothing in it comes from a real employer or customer, and I built it using AI as a design and development partner.",
     ],
     tabs: [
       ['cases', 'Case studies'],
@@ -384,22 +385,23 @@ export type Course = {
   about: string
   objectivesIntro?: string
   objectives: string[]
-  riseUrl?: string // paste the Articulate Rise share link here to show a "View course" button
+  riseUrl?: string // path or link to the hosted course; shows a "View the course" button
 }
 
 export const courses: Course[] = [
   {
-    title: 'Master Class Series: Drug Diversion Surveillance',
-    image: { src: 'images/drug-diversion-course.jpg', alt: 'A screen from the Introduction to Drug Diversion Surveillance course using a Guess Who? analogy to explain how AI matches patterns', kind: 'shot' },
-    company: 'Protenus',
+    title: 'Driftboard Automations: Foundations',
+    image: { src: 'images/driftboard-course.jpg', alt: 'The title screen of the Driftboard Automations course, showing the course title, a note that all data is fictional, and a card listing four learning objectives', kind: 'shot' },
+    company: 'Portfolio sample',
     about:
-      'A single course in a larger Master Class Series that teaches those involved in drug diversion surveillance how to approach their programs and conduct effective investigations. Learners explore the proactive approach to healthcare safety, including the use of AI in the Healthcare Compliance Analytics Model to identify and manage drug diversion incidents while safeguarding patients and employees.',
-    riseUrl: 'courses/drug-diversion/index.html',
+      'A mock customer-education course for a fictional project management tool, built to show how I design learning today. Instead of clicking through slides, learners work inside a realistic simulated app: they build an automation rule with a coach beside them, fix a rule that fires too often with hints on request, and then build and troubleshoot one on their own. The final challenge is scored, with feedback on every part, and it ends with a certificate. I designed it with AI as my build partner, aiming for WCAG 2.2 AA accessibility, with warm, safe-to-fail feedback throughout.',
+    objectivesIntro: 'By the end, learners can:',
+    riseUrl: 'courses/driftboard/index.html',
     objectives: [
-      'Analyze different models of drug diversion surveillance, including the proactive Healthcare Compliance Analytics (HCA) Model.',
-      'Explore the role of AI in adopting the HCA Model.',
-      'Identify the expected benefits of a case-based approach.',
-      'Explore evidence supporting the effectiveness of the case-based approach.',
+      'Spot the repetitive steps that suit automation.',
+      'Build a rule from a trigger and actions.',
+      'Refine a rule with conditions, so it runs only when it should.',
+      'Verify a rule by testing it and working out why it did or didn\u2019t fire.',
     ],
   },
 ]

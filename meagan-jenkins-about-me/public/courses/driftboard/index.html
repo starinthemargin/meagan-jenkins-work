@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Automate the busywork in Driftboard</title>
+<meta name="description" content="An interactive course on building and verifying automation rules in Driftboard, a fictional project management tool. All data is fictional.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css?v=20261104-pub1">
+<link rel="stylesheet" href="sim.css?v=20261104-pub1">
+<link rel="stylesheet" href="coach.css?v=20261104-pub1">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="course-head">
+  <div class="brand">
+    <svg width="30" height="30" viewBox="0 0 32 32" aria-hidden="true">
+      <rect width="32" height="32" rx="9" fill="#2B2640"/>
+      <path d="M5 19c3-6 6-6 9-2s6 4 9-2" fill="none" stroke="#FBF7F5" stroke-width="2.6" stroke-linecap="round"/>
+      <circle cx="25" cy="11" r="3.2" fill="#FF6B4A"/>
+    </svg>
+    <span>Driftboard <span class="brand-sub">Academy</span></span>
+  </div>
+  <nav aria-label="Course progress">
+    <ol class="stepper" id="stepper"></ol>
+  </nav>
+  <div class="map-wrap">
+    <button class="map-btn" id="map-btn" type="button" aria-expanded="false" aria-controls="map-panel">Course map</button>
+    <div class="map-panel" id="map-panel" hidden></div>
+  </div>
+</header>
+
+<main id="main" tabindex="-1"></main>
+
+<div class="size-note" role="note">
+  <h1>This course works best on a larger screen</h1>
+  <p>Driftboard's board and rule builder need some room. Open this page on a tablet or computer to continue.</p>
+</div>
+
+<div class="sr-only" id="announcer" role="status" aria-live="polite"></div>
+
+<script src="sim.js?v=20261104-pub1"></script>
+<script src="coach.js?v=20261104-pub1"></script>
+<script src="sim2.js?v=20261104-pub1"></script>
+<script src="sim3.js?v=20261104-pub1"></script>
+<script src="round1.js?v=20261104-pub1"></script>
+<script src="round2.js?v=20261104-pub1"></script>
+<script src="round3.js?v=20261104-pub1"></script>
+<script src="results.js?v=20261104-pub1"></script>
+<script src="app.js?v=20261104-pub1"></script>
+</body>
+</html>
