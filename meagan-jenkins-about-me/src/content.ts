@@ -276,7 +276,7 @@ export const education = [
 
 export const certs = ['Licensed Scrum Master', 'Licensed Product Owner', 'Ntrinsx Certified Trainer', 'Foundations in Customer Education']
 
-export type Picture = { src: string; alt: string; kind: 'logo' | 'shot' | 'art' }
+export type Picture = { src: string; alt: string; kind: 'logo' | 'shot' | 'art' | 'wide' }
 
 export type CaseStudy = {
   id: string
@@ -391,7 +391,7 @@ export type Course = {
 export const courses: Course[] = [
   {
     title: 'Driftboard Automations: Foundations',
-    image: { src: 'images/driftboard-course.jpg', alt: 'The title screen of the Driftboard Automations course, showing the course title, a note that all data is fictional, and a card listing four learning objectives', kind: 'shot' },
+    image: { src: 'images/driftboard-course.jpg', alt: 'The title screen of the Driftboard Automations course, showing the course title, a note that all data is fictional, and a card listing four learning objectives', kind: 'wide' },
     company: 'Portfolio sample',
     about:
       'A mock customer-education course for a fictional project management tool, built to show how I design learning today. Instead of clicking through slides, learners work inside a realistic simulated app: they build an automation rule with a coach beside them, fix a rule that fires too often with hints on request, and then build and troubleshoot one on their own. The final challenge is scored, with feedback on every part, and it ends with a certificate. I designed it with AI as my build partner, aiming for WCAG 2.2 AA accessibility, with warm, safe-to-fail feedback throughout.',

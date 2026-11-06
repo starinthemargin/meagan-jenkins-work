@@ -1,4 +1,4 @@
-import { useSyncExternalStore } from 'react'
+import { useSyncExternalStore, useEffect, useRef } from 'react'
 
 // Tree scavenger hunt. Found cairns are remembered in localStorage so the hunt carries across pages.
 export const TOTAL_CAIRNS = 8
@@ -82,6 +82,39 @@ export function HuntHud() {
   const { found: list, celebrating: party } = useHunt()
   const count = Math.min(list.length, TOTAL_CAIRNS)
   const done = count >= TOTAL_CAIRNS
+  const cardRef = useRef<HTMLDivElement>(null)
+
+  // The celebration is a modal dialog: move focus into it, keep Tab inside, close on Escape, then restore focus.
+  useEffect(() => {
+    if (!party) return
+    const previous = document.activeElement as HTMLElement | null
+    const card = cardRef.current
+    card?.focus()
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        closeCelebration()
+        return
+      }
+      if (e.key !== 'Tab' || !card) return
+      const items = card.querySelectorAll<HTMLElement>('button, a[href]')
+      if (!items.length) return
+      const first = items[0]
+      const last = items[items.length - 1]
+      const active = document.activeElement
+      if (e.shiftKey && (active === first || active === card)) {
+        e.preventDefault()
+        last.focus()
+      } else if (!e.shiftKey && active === last) {
+        e.preventDefault()
+        first.focus()
+      }
+    }
+    document.addEventListener('keydown', onKey)
+    return () => {
+      document.removeEventListener('keydown', onKey)
+      previous?.focus?.()
+    }
+  }, [party])
 
   return (
     <>
@@ -96,7 +129,7 @@ export function HuntHud() {
       </div>
 
       {party && (
-        <div className="hunt-overlay" role="dialog" aria-modal="true" aria-label="Scavenger hunt complete">
+        <div className="hunt-overlay" role="dialog" aria-modal="true" aria-labelledby="hunt-title">
           <div className="hunt-confetti" aria-hidden="true">
             {Array.from({ length: 36 }, (_, i) => (
               <span
@@ -112,14 +145,14 @@ export function HuntHud() {
               </span>
             ))}
           </div>
-          <div className="hunt-card">
+          <div className="hunt-card" ref={cardRef} tabIndex={-1}>
             <button className="hunt-close" onClick={closeCelebration} aria-label="Close">
               ×
             </button>
             <div className="hunt-badge" aria-hidden="true">
               ⚑
             </div>
-            <h3>You found all {TOTAL_CAIRNS} trees!</h3>
+            <h3 id="hunt-title">You found all {TOTAL_CAIRNS} trees!</h3>
             <p>Summit badge unlocked. You are officially a very thorough hiker (and can't see the forest for the trees).</p>
             <div className="hero-actions" style={{ justifyContent: 'center' }}>
               <button className="btn btn-solid" onClick={closeCelebration}>

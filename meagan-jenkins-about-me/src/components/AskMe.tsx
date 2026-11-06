@@ -37,13 +37,14 @@ export function AskMe() {
           </button>
         ))}
       </div>
-      <div className="answer" aria-live="polite">
+      <div className="answer" role="status">
         {active === null ? (
           <span className="answer-empty">Pick a question and I will answer it.</span>
         ) : (
           <>
             <span className="answer-who">Meagan</span>
-            <p>
+            <p className="sr-only">{answer}</p>
+            <p aria-hidden="true">
               {answer.slice(0, chars)}
               {chars < answer.length && <span className="caret" />}
             </p>

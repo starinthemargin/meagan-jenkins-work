@@ -1,6 +1,6 @@
 # Handoff notes: meaganjenkins.work
 
-Last updated: Nov 4, 2026. Read this first if you are picking this project up in a new chat or on a new machine.
+Last updated: Nov 5, 2026. Read this first if you are picking this project up in a new chat or on a new machine.
 
 ## What this is
 Meagan Jenkins's portfolio, live at **https://meaganjenkins.work**. It replaced a Wix site. It is a static site built with Vite, React and TypeScript, in the style of the "trail guide" About Me page (altimeter header, topographic background, Trail mode and Spooky mode).
@@ -29,6 +29,7 @@ npm run lint
 | Routing | `src/router.ts`. It uses hash routes (`#/work`, `#/about`, `#/tech-stack`), so it works on any static host without redirect rules. |
 | Tree scavenger hunt | `src/hunt.tsx` |
 | Images | `public/images/` |
+| Home card icons | `src/components/Icon3D.tsx`: custom gradient 3D-style SVG icons (decorative, hidden from screen readers) |
 | PDF guides | `public/guides/` (first-page previews are in `public/images/guide-*.jpg`) |
 | Hosted eLearning course | `public/courses/driftboard/`: a hand-built HTML, CSS and JS mock course for a fictional product (no build step). It is the only course on the site. Its design brief, accessibility notes and early prototype are in `docs/driftboard/` (not published). |
 
@@ -41,6 +42,10 @@ Use `*asterisks*` around a word in headings in `content.ts` to show it in the ac
 - **Editing the Driftboard course:** `index.html` tags every script and stylesheet with `?v=<version>`. Change that version string every time you edit a course file and publish, or browsers (and GitHub Pages) may keep serving the old files.
 - **Case study image:** set `image` on the case study (`kind`: `logo`, `shot` or `art`). All three kinds share one look: border, flat purple shadow, rounded corners.
 - **Hidden trees:** 8 hidden trees are spread across the site, and `TOTAL_CAIRNS` in `src/hunt.tsx` must match the number of `<Cairn id="...">` elements. Current ids: `home-hero`, `home-card`, `work-case`, `work-video`, `tech-pack`, `about-hero`, `about-signs`, `about-route`. The counter and progress are saved in the browser's localStorage.
+
+## Accessibility notes
+- The site targets WCAG 2.2 AA. The latest audit and its limits are in `docs/site-accessibility.md`. Re-run it (axe-core in both themes, plus a keyboard pass) after any layout change.
+- Built in: a skip link, focus that moves to the page content when the page changes, a focus-trapping dialog for the tree-game celebration, and screen-reader notices on links that open new tabs. Keep these when editing `App.tsx` or `hunt.tsx`.
 
 ## Hosting and domain (done)
 - **Hosting:** GitHub Pages, deployed by the workflow above. Custom domain `meaganjenkins.work`, HTTPS enforced.

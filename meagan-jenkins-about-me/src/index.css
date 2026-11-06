@@ -14,6 +14,7 @@
   --contour: rgba(47, 125, 79, 0.22);
   --shadow: 0 18px 40px -22px rgba(23, 61, 42, 0.55);
   --on-solid: #fff;
+  --focus-ring: #b34e07;
   --display: 'Bricolage Grotesque', system-ui, sans-serif;
   --sans: 'DM Sans', system-ui, sans-serif;
   --mono: 'DM Mono', ui-monospace, monospace;
@@ -23,6 +24,7 @@
 
 :root[data-theme='spooky'] {
   --bg: #150d24;
+  --focus-ring: #ff9b3d;
   --bg-2: #1e1233;
   --surface: #221639;
   --surface-2: #2a1c46;
@@ -57,7 +59,7 @@ ul, ol { list-style: none; margin: 0; padding: 0; }
 button { font: inherit; color: inherit; cursor: pointer; }
 a { color: inherit; }
 em { font-style: normal; color: var(--purple); }
-:focus-visible { outline: 3px solid var(--orange); outline-offset: 3px; border-radius: 6px; }
+:focus-visible { outline: 3px solid var(--focus-ring); outline-offset: 3px; border-radius: 6px; }
 button:disabled { cursor: default; }
 
 .world { position: relative; min-height: 100vh; overflow-x: clip; }
@@ -159,9 +161,11 @@ h1 span { background: linear-gradient(95deg, var(--green), var(--purple)); -webk
 }
 .arrow:hover { background: var(--lilac); transform: scale(1.08); }
 .arrow-prev { left: 0.8rem; } .arrow-next { right: 0.8rem; }
-.dots { display: flex; gap: 0.5rem; justify-content: center; margin-top: 1.1rem; }
-.dots button { width: 12px; height: 12px; border-radius: 999px; border: 2px solid var(--ink); background: transparent; padding: 0; transition: width 0.25s, background 0.25s; }
-.dots button.on { width: 34px; background: var(--purple); border-color: var(--purple); }
+.dots { display: flex; gap: 0.15rem; justify-content: center; margin-top: 0.9rem; }
+.dots button { position: relative; width: 24px; height: 24px; padding: 0; border: 0; background: transparent; display: grid; place-items: center; }
+.dots button::before { content: ''; display: block; width: 12px; height: 12px; border-radius: 999px; border: 2px solid var(--ink); background: transparent; transition: width 0.25s, background 0.25s; }
+.dots button.on { width: 46px; }
+.dots button.on::before { width: 34px; background: var(--purple); border-color: var(--purple); }
 
 .waypoint { max-width: 1240px; margin: 0 auto; padding: clamp(3rem, 6vw, 5.5rem) clamp(1rem, 4vw, 3rem); border-top: 1px dashed var(--line); }
 .waypoint-head { max-width: 46rem; margin-bottom: 2.4rem; display: grid; gap: 0.8rem; }
@@ -304,9 +308,16 @@ h1 span { background: linear-gradient(95deg, var(--green), var(--purple)); -webk
 .about-title { font-size: clamp(3.4rem, 9vw, 6.5rem); }
 .page-title { font-size: clamp(2.2rem, 5vw, 3.8rem); font-weight: 800; color: var(--ink); margin: 0; }
 :root[data-theme='spooky'] .page-title { color: var(--ink); }
-.hero-home { grid-template-columns: minmax(0, 52rem); }
+.hero-home { grid-template-columns: minmax(0, 1fr); }
+.hero-home .hero-copy { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr); column-gap: clamp(2rem, 5vw, 5rem); align-items: end; }
+.hero-home .hero-side { padding-bottom: 0.4rem; }
+.hero-home .intro { margin-top: 0; max-width: 34rem; font-size: 1.18rem; line-height: 1.6; }
+.hero-home .hero-actions { margin-top: 1.6rem; }
 .tagline-wide { max-width: 30ch; }
-.hero-home .intro { max-width: 40rem; }
+@media (max-width: 900px) {
+  .hero-home .hero-copy { grid-template-columns: minmax(0, 1fr); row-gap: 0.4rem; }
+  .hero-home .intro { margin-top: 1.1rem; }
+}
 
 /* Cards */
 .card-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 3rem 3.5rem; padding-right: 12px; padding-bottom: 16px; }
@@ -330,7 +341,12 @@ h1 span { background: linear-gradient(95deg, var(--green), var(--purple)); -webk
 .case-card .case-stat b { font-size: clamp(2.2rem, 4vw, 3rem); font-weight: 800; letter-spacing: -0.03em; line-height: 1; }
 .case-go { font-family: var(--mono); font-size: 0.85rem; color: var(--green); margin-top: 0.3rem; }
 .mini-card { text-align: left; gap: 0.2rem; }
-.mini-card span { font-size: 1.8rem; }
+.icon3d { display: block; width: 92px; height: 92px; margin: -0.3rem 0 0.4rem -0.4rem; }
+.icon3d svg { display: block; width: 100%; height: 100%; overflow: visible; }
+@media (prefers-reduced-motion: no-preference) {
+  .icon3d { transition: transform 0.3s cubic-bezier(0.3, 1.4, 0.5, 1); }
+  .mini-card:hover .icon3d, .mini-card:focus-visible .icon3d { transform: translateY(-4px) rotate(-4deg) scale(1.04); }
+}
 .mini-card b { font-family: var(--display); font-size: 1.3rem; }
 .mini-card small { color: var(--ink-soft); font-size: 0.9rem; }
 
@@ -349,7 +365,7 @@ h1 span { background: linear-gradient(95deg, var(--green), var(--purple)); -webk
 .panel-card p, .case-body p, .case-section li { color: var(--ink-soft); }
 .muted { color: var(--ink-soft); }
 .wide { grid-column: 1 / -1; }
-.small-head { font-family: var(--mono); font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--ink-soft); font-weight: 500; }
+.small-head { font-family: var(--display); font-size: 1.3rem; font-weight: 800; letter-spacing: -0.02em; color: var(--ink); margin-top: 0.4rem; }
 .dot-list, .case-section ul { display: grid; gap: 0.5rem; padding-left: 1.2rem; list-style: disc; }
 .dot-list li::marker, .case-section li::marker { color: var(--green); }
 .todo { font-family: var(--stamp); color: var(--purple); }
@@ -410,8 +426,11 @@ h1 span { background: linear-gradient(95deg, var(--green), var(--purple)); -webk
 @keyframes fall { to { transform: translateY(110vh) rotate(360deg); } }
 
 @media (max-width: 960px) {
-  .card-grid, .card-grid.four, .video-grid { grid-template-columns: 1fr; }
-  .card-grid.four { grid-template-columns: 1fr 1fr; }
+  .card-grid, .card-grid.four, .video-grid { grid-template-columns: minmax(0, 1fr); }
+  .card-grid.four { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.5rem; padding-right: 0; }
+}
+@media (max-width: 520px) {
+  .card-grid.four { grid-template-columns: minmax(0, 1fr); }
 }
 
 .pack-note { font-family: var(--stamp); color: var(--purple); font-size: 1.05rem; max-width: 46rem; transform: rotate(-0.4deg); }
@@ -453,3 +472,8 @@ h1 span { background: linear-gradient(95deg, var(--green), var(--purple)); -webk
 .figure--art { max-width: 480px; }
 .figure--shot { max-height: 440px; overflow-y: auto; background: var(--surface-2); }
 
+
+/* accessibility */
+.skip-link { position: absolute; left: 0.75rem; top: -4rem; z-index: 100; padding: 0.7rem 1.1rem; border-radius: 10px; background: var(--ink); color: var(--bg); font-weight: 700; text-decoration: none; }
+.skip-link:focus { top: 0.75rem; }
+main:focus, .hunt-card:focus { outline: none; }

@@ -27,7 +27,7 @@ export function About() {
           ))}
           <div className="hero-actions">
             <a className="btn btn-solid" href={profile.linkedin} target="_blank" rel="noreferrer">
-              {a.connectLabel}
+              {a.connectLabel}<span className="sr-only"> (opens in a new tab)</span>
             </a>
             <a className="btn btn-ghost" href={`mailto:${profile.email}`}>
               {a.emailLabel}

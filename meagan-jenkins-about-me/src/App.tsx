@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
 import { Atmosphere } from './components/Atmosphere'
 import { Rich } from './components/Rich'
 import { copy, profile } from './content'
@@ -21,6 +21,8 @@ export default function App() {
   const [theme, toggleTheme] = useTheme()
   const progress = useScrollProgress()
   const route = useRoute()
+  const mainRef = useRef<HTMLElement>(null)
+  const firstRender = useRef(true)
   const altitude = Math.round(profile.startAltitude + progress * (profile.summitAltitude - profile.startAltitude))
   const atSummit = progress > 0.985
 
@@ -28,8 +30,28 @@ export default function App() {
     document.title = route.page === 'home' ? `${profile.name} | ${titles.home}` : `${titles[route.page]} | ${profile.name}`
   }, [route.page])
 
+  // Move focus to the new page's content when the route changes, so keyboard and screen-reader users land in it.
+  useEffect(() => {
+    if (firstRender.current) {
+      firstRender.current = false
+      return
+    }
+    mainRef.current?.focus({ preventScroll: true })
+  }, [route.page])
+
   return (
     <div className="world">
+      <a
+        className="skip-link"
+        href="#top"
+        onClick={(e) => {
+          e.preventDefault()
+          mainRef.current?.focus()
+          mainRef.current?.scrollIntoView()
+        }}
+      >
+        Skip to content
+      </a>
       <Atmosphere />
 
       <header className="topbar">
@@ -48,14 +70,14 @@ export default function App() {
               {label}
             </a>
           ))}
-          <button className="theme-toggle" onClick={toggleTheme} aria-pressed={theme === 'spooky'}>
+          <button className="theme-toggle" onClick={toggleTheme}>
             <span aria-hidden="true">{theme === 'spooky' ? '🌲' : '🎃'}</span> {theme === 'spooky' ? 'Trail mode' : 'Spooky mode'}
           </button>
         </nav>
         <div className="progress" aria-hidden="true" style={{ transform: `scaleX(${progress})` }} />
       </header>
 
-      <main id="top" key={route.page}>
+      <main id="top" key={route.page} ref={mainRef} tabIndex={-1}>
         {route.page === 'home' && <Home />}
         {route.page === 'work' && <Work tab={route.tab} open={route.open} />}
         {route.page === 'tech-stack' && <TechStack />}
@@ -73,7 +95,7 @@ export default function App() {
             {profile.email}
           </a>
           <a className="btn btn-ghost" href={profile.linkedin} target="_blank" rel="noreferrer">
-            Connect on LinkedIn ↗
+            Connect on LinkedIn ↗<span className="sr-only"> (opens in a new tab)</span>
           </a>
         </div>
         <a className="back" href="#top" onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }) }}>

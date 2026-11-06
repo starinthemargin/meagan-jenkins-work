@@ -28,7 +28,10 @@ function VideoPlayer({ id, title }: { id: string; title: string }) {
 
 function Figure({ image }: { image: Picture }) {
   return (
-    <figure className={`figure figure--${image.kind}`}>
+    <figure
+      className={`figure figure--${image.kind}`}
+      {...(image.kind === 'shot' ? { tabIndex: 0, role: 'region', 'aria-label': 'Scrollable screenshot' } : {})}
+    >
       <img src={image.src} alt={image.alt} loading="lazy" />
     </figure>
   )
@@ -124,7 +127,7 @@ export function Work({ tab, open }: { tab?: string; open?: string }) {
                 </ul>
                 {c.riseUrl ? (
                   <a className="btn btn-solid" href={c.riseUrl} target="_blank" rel="noreferrer">
-                    View the course ↗
+                    View the course ↗<span className="sr-only"> (opens in a new tab)</span>
                   </a>
                 ) : (
                   <p className="todo">Course preview link coming soon.</p>
@@ -151,7 +154,7 @@ export function Work({ tab, open }: { tab?: string; open?: string }) {
                 <p>{v.blurb}</p>
                 {v.vimeoId && (
                   <a className="link-button" href={`https://vimeo.com/${v.vimeoId}`} target="_blank" rel="noreferrer">
-                    Not loading? Watch on Vimeo ↗
+                    Not loading? Watch on Vimeo ↗<span className="sr-only"> (opens in a new tab)</span>
                   </a>
                 )}
                 {i === 3 && <Cairn id="work-video" variant="subtle" style={{ top: '0.6rem', left: '0.6rem' }} />}
@@ -165,14 +168,14 @@ export function Work({ tab, open }: { tab?: string; open?: string }) {
             <p className="muted wide">Samples of clear, concise, user-friendly documentation designed to educate and empower readers.</p>
             {guides.map((g) => (
               <article key={g.title} className="panel-card guide">
-                <a className="guide-thumb" href={g.url} target="_blank" rel="noreferrer" aria-label={`Open ${g.title} (PDF)`}>
+                <a className="guide-thumb" href={g.url} target="_blank" rel="noreferrer" aria-label={`Open ${g.title} (PDF, opens in a new tab)`}>
                   <img src={g.thumb} alt={`First page of ${g.title}`} loading="lazy" />
                 </a>
                 <span className="case-company">{g.company}</span>
                 <h2>{g.title}</h2>
                 <p>{g.blurb}</p>
                 <a className="btn btn-solid" href={g.url} target="_blank" rel="noreferrer">
-                  Open the PDF ↗
+                  Open the PDF ↗<span className="sr-only"> (opens in a new tab)</span>
                 </a>
               </article>
             ))}
