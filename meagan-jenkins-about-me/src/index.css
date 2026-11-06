@@ -188,7 +188,11 @@ h1 span { background: linear-gradient(95deg, var(--green), var(--purple)); -webk
 .sign:hover { filter: brightness(1.08); transform: rotate(0) scale(1.03); }
 .sign.open { --w: #d7a24f; outline: none; filter: brightness(1.12); }
 .sign:focus-visible { outline-offset: -4px; }
-.sign-emoji { font-size: 1.4rem; }
+.icon3d--xs { width: 52px; height: 52px; margin: -0.7rem 0 -0.7rem -0.35rem; flex: none; }
+@media (max-width: 420px) {
+  .icon3d--xs { width: 42px; height: 42px; margin: -0.5rem 0 -0.5rem -0.3rem; }
+  .sign { gap: 0.4rem; font-size: 1.05rem; padding-right: 2rem; }
+}
 .sign-blurb { margin-top: 0.5rem; padding: 0.8rem 1rem; background: var(--surface); border: 1.5px solid var(--ink); border-radius: 12px; font-size: 0.95rem; color: var(--ink-soft); width: min(92%, 26rem); animation: rise 0.3s ease; }
 .left .sign-blurb { justify-self: start; } .right .sign-blurb { justify-self: end; }
 .sign-blurb[hidden] { display: none; }
@@ -388,7 +392,8 @@ h1 span { background: linear-gradient(95deg, var(--green), var(--purple)); -webk
 .pack { display: grid; gap: 1.4rem; max-width: 60rem; }
 .pack-group { position: relative; padding: clamp(1.2rem, 3vw, 1.8rem); background: var(--surface); border: 2px solid var(--ink); border-radius: 20px; display: grid; gap: 1rem; }
 :root[data-theme='spooky'] .pack-group { border-color: var(--purple); }
-.pack-group h2 { font-size: 1.6rem; font-weight: 800; }
+.pack-group h2 { font-size: 1.6rem; font-weight: 800; display: flex; align-items: center; gap: 0.9rem; }
+.icon3d--sm { width: 72px; height: 72px; margin: -0.6rem 0 -0.6rem -0.5rem; flex: none; }
 
 /* Tree scavenger hunt */
 .cairn {

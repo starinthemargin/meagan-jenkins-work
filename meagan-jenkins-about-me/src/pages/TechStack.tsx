@@ -1,4 +1,5 @@
 import { Cairn } from '../hunt'
+import { Icon3D } from '../components/Icon3D'
 import { Rich } from '../components/Rich'
 import { copy, techStack } from '../content'
 
@@ -16,7 +17,8 @@ export function TechStack() {
         {techStack.map((g, i) => (
           <section key={g.group} className="pack-group">
             <h2>
-              <span aria-hidden="true">{g.emoji}</span> {g.group}
+              <Icon3D name={g.icon} size="sm" />
+              {g.group}
             </h2>
             {g.note && <p className="pack-note">{g.note}</p>}
             <ul className="badge-list">

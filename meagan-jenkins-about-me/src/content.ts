@@ -1,3 +1,4 @@
+import type { IconName } from './components/Icon3D'
 export const profile = {
   name: 'Meagan Jenkins',
   degree: 'M.Ed. in Curriculum & Instruction',
@@ -131,20 +132,20 @@ export const slides: Slide[] = [
   },
 ]
 
-export type Sign = { label: string; emoji: string; blurb: string }
+export type Sign = { label: string; icon: IconName; blurb: string }
 
 export const signs: Sign[] = [
-  { label: 'Hiking', emoji: '🥾', blurb: 'My default answer to "what should we do?" Bonus points for a cold beer afterward.' },
-  { label: 'Skiing', emoji: '⛷️', blurb: 'Living in Colorado helps. Winter is basically a personality trait.' },
-  { label: 'Camping', emoji: '⛺', blurb: "A tent, a campfire, and about three s'mores too many." },
-  { label: 'Disc golf', emoji: '🥏', blurb: 'A long walk in the woods with a scorecard and a VERY flexible definition of par.' },
+  { label: 'Hiking', icon: 'boot', blurb: 'My default answer to "what should we do?" Bonus points for a cold beer afterward.' },
+  { label: 'Skiing', icon: 'goggles', blurb: 'Living in Colorado helps. Winter is basically a personality trait.' },
+  { label: 'Camping', icon: 'tent', blurb: "A tent, a campfire, and about three s'mores too many." },
+  { label: 'Disc golf', icon: 'disc', blurb: 'A long walk in the woods with a scorecard and a VERY flexible definition of par.' },
   {
     label: 'Halloween',
-    emoji: '🎃',
+    icon: 'pumpkin',
     blurb: 'Year-round enthusiast, October main event. It is also why I have a full sleeve of spooky (and spooky-adjacent) tattoos.',
   },
-  { label: 'Dogs', emoji: '🐕', blurb: 'Did I mention dogs? I feel like I should mention the dogs. Please send me pics of your dogs ANY time.' },
-  { label: 'Fire-staring', emoji: '🔥', blurb: 'A legitimate hobby. Wanna join me? Add a log to the fire!' },
+  { label: 'Dogs', icon: 'dog', blurb: 'Did I mention dogs? I feel like I should mention the dogs. Please send me pics of your dogs ANY time.' },
+  { label: 'Fire-staring', icon: 'flame', blurb: 'A legitimate hobby. Wanna join me? Add a log to the fire!' },
 ]
 
 export const fireMessages = [
@@ -448,10 +449,10 @@ export const guides: Guide[] = [
   },
 ]
 
-export const techStack: { group: string; emoji: string; note?: string; items: string[] }[] = [
+export const techStack: { group: string; icon: IconName; note?: string; items: string[] }[] = [
   {
     group: 'Content design',
-    emoji: '🧭',
+    icon: 'compass',
     items: [
       'Articulate 360 (e-learning design)',
       'Captivate (e-learning design)',
@@ -463,18 +464,18 @@ export const techStack: { group: string; emoji: string; note?: string; items: st
   },
   {
     group: 'AI & building tools',
-    emoji: '🤖',
+    icon: 'robot',
     note: "Full disclosure: I'm not a coder. But I know exactly how to ask AI tools to do it for me, and I'm pretty good at telling them when they got it wrong. (This site is proof.)",
     items: ['Claude', 'ChatGPT', 'Cursor', 'GitHub', 'WellSaid Labs (AI voiceover)', 'ElevenLabs (AI voiceover)'],
   },
   {
     group: 'Learning management',
-    emoji: '🎓',
+    icon: 'cap',
     items: ['Skilljar', 'Northpass', 'Thinkific', 'Docebo', 'MindTickle', 'HealthStream', 'Brainshark'],
   },
   {
     group: 'Other tools',
-    emoji: '🎒',
+    icon: 'techstack',
     items: ['G Suite', 'HubSpot', 'Asana', 'ChurnZero', 'Confluence', 'Freshdesk', 'Microsoft apps', 'Jira', 'Notion', 'Pendo', 'Salesforce', 'Tableau', 'Zendesk'],
   },
 ]

@@ -29,7 +29,7 @@ npm run lint
 | Routing | `src/router.ts`. It uses hash routes (`#/work`, `#/about`, `#/tech-stack`), so it works on any static host without redirect rules. |
 | Tree scavenger hunt | `src/hunt.tsx` |
 | Images | `public/images/` |
-| Home card icons | `src/components/Icon3D.tsx`: custom gradient 3D-style SVG icons (decorative, hidden from screen readers) |
+| Custom icons (Home, Tech stack, About) | `src/components/Icon3D.tsx`: custom gradient 3D-style SVG icons (decorative, hidden from screen readers). Each Tech stack group and each About trail sign picks its icon with the `icon` field in `src/content.ts`. |
 | PDF guides | `public/guides/` (first-page previews are in `public/images/guide-*.jpg`) |
 | Hosted eLearning course | `public/courses/driftboard/`: a hand-built HTML, CSS and JS mock course for a fictional product (no build step). It is the only course on the site. Its design brief, accessibility notes and early prototype are in `docs/driftboard/` (not published). |
 

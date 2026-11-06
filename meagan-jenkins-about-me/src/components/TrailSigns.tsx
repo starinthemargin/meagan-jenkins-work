@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { signs } from '../content'
+import { Icon3D } from './Icon3D'
 
 export function TrailSigns() {
   const [open, setOpen] = useState<number | null>(null)
@@ -15,9 +16,7 @@ export function TrailSigns() {
               aria-controls={`sign-${i}`}
               onClick={() => setOpen(open === i ? null : i)}
             >
-              <span className="sign-emoji" aria-hidden="true">
-                {s.emoji}
-              </span>
+              <Icon3D name={s.icon} size="xs" />
               <span className="sign-label">{s.label}</span>
             </button>
             <p id={`sign-${i}`} className="sign-blurb" hidden={open !== i}>
