@@ -495,13 +495,6 @@ export const guides: Guide[] = [
     thumb: 'images/guide-when-to-contact-protenus.jpg',
   },
   {
-    title: 'Solo 401(k) 2025 Contribution Limits',
-    company: 'Collective (writing sample)',
-    blurb: 'A member-facing guide that turns dense contribution-limit rules into a clear, scannable explainer.',
-    url: 'guides/collective-help-article-sample.pdf',
-    thumb: 'images/guide-collective-help-article-sample.jpg',
-  },
-  {
     title: 'Client Authorization Instructions',
     company: 'Confirmation',
     blurb: 'A step-by-step quick reference that walks clients through providing authorization, including uploading a signature.',
