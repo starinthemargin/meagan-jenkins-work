@@ -10,6 +10,7 @@ const aliases: Record<string, { page: Page; tab?: string }> = {
   elearning: { page: 'work', tab: 'elearning' },
   'instructional-videos': { page: 'work', tab: 'videos' },
   'instructional-guides': { page: 'work', tab: 'guides' },
+  'help-center': { page: 'work', tab: 'help-center' },
   'tech-stack': { page: 'tech-stack' },
   about: { page: 'about' },
   'about-7': { page: 'about' },

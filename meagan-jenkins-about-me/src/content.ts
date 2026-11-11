@@ -43,6 +43,7 @@ export const copy = {
       ['cases', 'Case studies'],
       ['elearning', 'eLearning'],
       ['videos', 'Videos'],
+      ['help-center', 'Help Center'],
       ['guides', 'Guides'],
     ] as [string, string][],
   },
@@ -421,6 +422,66 @@ export const videos: Video[] = [
   { title: 'Creating Journeys', blurb: 'Created as part of a contract consulting and design job for Branch Metrics.', vimeoId: '1054815517' },
   { title: 'PANDAS Habitat', blurb: 'Introduced the launch of the Protenus customer community platform.', vimeoId: '1055013644' },
 ]
+
+// Help Center tab on the Work page. Numbers are approximate and "since launch" (still in its first year).
+export const helpCenter = {
+  company: 'SmarterDx',
+  title: 'Designing the SmarterDx Help Center',
+  intro:
+    'The SmarterDx Help Center is the single source of truth for product documentation, release notes, and support across the SmarterDx platform. I designed and built it from the ground up in Zendesk, primarily for clients, though it has also become an essential resource for the internal teams who support them.',
+  homeImage: {
+    src: 'images/helpcenter-smarterdx-home.jpg',
+    alt: 'The SmarterDx Help Center home page: a "How can we help?" search box above six product cards for SmarterDx, SmarterPrebill, SmarterDenials, SmarterCharges, SmarterNotes, and SmarterUtilization',
+    kind: 'shot',
+  } as Picture,
+  stats: [
+    ['~2,300', 'ticket deflections'],
+    ['~5,500', 'page views'],
+    ['~2,400', 'unique sessions'],
+  ] as [string, string][],
+  statsNote: '* Approximate figures since launch. The help center is still in its first year.',
+  sections: [
+    {
+      heading: 'The problem',
+      items: [
+        'Product documentation was scattered, and clients had no evergreen resource to turn to.',
+        'CSMs, Support, and Implementation often sent static PDF files as documentation, and those quickly went out of date.',
+        'When clients had a question, they had to reach out to their CSM or the Support team and wait for a response.',
+      ],
+    },
+    {
+      heading: 'The goals',
+      items: [
+        'One up-to-date source for product documentation, for clients and internal teams alike.',
+        'Self-serve answers and how-to articles that clients can find quickly and easily.',
+        'One place for clients to submit and track support tickets, and to CC teammates so they stay informed.',
+      ],
+    },
+    {
+      heading: 'Information architecture',
+      text: 'Content is organized by product first. Inside each product, articles follow the user’s journey: Getting started, Key workflows, Advanced workflows, and Troubleshooting and FAQs, alongside sections for metrics and product releases.',
+    },
+    {
+      heading: 'Style guide and templates',
+      text: 'With the lead documentation specialist on my team, I developed a style guide for product documentation and training. We used the SmarterDx marketing guide as a base and adapted it where product documentation needed something more specific. We also built two article templates: one for standard articles and one for product releases.',
+    },
+    {
+      heading: 'Content governance',
+      text: 'We built a content governance framework with a full review and approval process and a regular review cadence, so articles stay accurate as the products change.',
+    },
+    {
+      heading: 'A fully custom theme',
+      text: 'I designed and developed a fully custom Zendesk theme with the help of AI-assisted coding tools. The theme code is maintained in GitHub and connected directly to Zendesk, so publishing an update takes a single refresh in Zendesk.',
+    },
+  ] as { heading: string; text?: string; items?: string[] }[],
+  structureImage: {
+    src: 'images/helpcenter-smarterdx-category.jpg',
+    alt: 'The SmarterPrebill category page, with article groups for Getting started, Key workflows, Advanced workflows, Troubleshooting and FAQs, Metrics, and product releases split into recent and past releases',
+    kind: 'shot',
+  } as Picture,
+  structureCaption: 'A product category page. Each product follows the same structure, so clients always know where to look.',
+  results:
+    'Since launch, the help center has deflected about 2,300 tickets and drawn about 5,500 page views across roughly 2,400 unique sessions. Three of the top five articles are product release notes or articles about brand-new features, so clients are coming back to stay current, not only to troubleshoot.',}
 
 export type Guide = { title: string; company: string; blurb: string; url: string; thumb: string }
 

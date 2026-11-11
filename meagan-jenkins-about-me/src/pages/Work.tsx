@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Cairn } from '../hunt'
 import { Rich } from '../components/Rich'
-import { caseStudies, copy, courses, guides, videos, type Picture } from '../content'
+import { caseStudies, copy, courses, guides, helpCenter, videos, type Picture } from '../content'
 
 // Shows a saved poster image first and only loads the Vimeo player when clicked.
 function VideoPlayer({ id, title }: { id: string; title: string }) {
@@ -160,6 +160,49 @@ export function Work({ tab, open }: { tab?: string; open?: string }) {
                 {i === 3 && <Cairn id="work-video" variant="subtle" style={{ top: '0.6rem', left: '0.6rem' }} />}
               </article>
             ))}
+          </div>
+        )}
+
+        {active === 'help-center' && (
+          <div className="stack">
+            <article className="panel-card help-center">
+              <span className="case-company">{helpCenter.company}</span>
+              <h2>{helpCenter.title}</h2>
+              <p>{helpCenter.intro}</p>
+              <dl className="hc-stats">
+                {helpCenter.stats.map(([value, label]) => (
+                  <div key={label}>
+                    <dt>{label}</dt>
+                    <dd>{value}<span aria-hidden="true">*</span></dd>
+                  </div>
+                ))}
+              </dl>
+              <p className="hc-footnote">{helpCenter.statsNote}</p>
+              <Figure image={helpCenter.homeImage} />
+              {helpCenter.sections.map((sec) => (
+                <div key={sec.heading} className="case-section">
+                  <h3>{sec.heading}</h3>
+                  {sec.text && <p>{sec.text}</p>}
+                  {sec.items && (
+                    <ul>
+                      {sec.items.map((it) => (
+                        <li key={it}>{it}</li>
+                      ))}
+                    </ul>
+                  )}
+                  {sec.heading === 'Information architecture' && (
+                    <>
+                      <Figure image={helpCenter.structureImage} />
+                      <p className="muted hc-note">{helpCenter.structureCaption}</p>
+                    </>
+                  )}
+                </div>
+              ))}
+              <div className="case-section">
+                <h3>Results so far</h3>
+                <p>{helpCenter.results}</p>
+              </div>
+            </article>
           </div>
         )}
 

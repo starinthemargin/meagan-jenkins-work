@@ -380,6 +380,16 @@ h1 span { background: linear-gradient(95deg, var(--green), var(--purple)); -webk
 .case-body { display: grid; gap: 1.1rem; margin-top: 1rem; padding-top: 1.2rem; border-top: 1px dashed var(--line); max-width: 46rem; }
 .case-section { display: grid; gap: 0.6rem; }
 .case-section h3 { font-size: 1.2rem; font-weight: 800; }
+.help-center { gap: 1.1rem; }
+.help-center > p, .help-center .case-section { max-width: 46rem; }
+.hc-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr)); gap: 0.8rem; margin-top: 0.4rem; }
+.hc-stats div { display: flex; flex-direction: column-reverse; align-items: center; gap: 0.2rem; padding: 0.9rem 1rem; border: 1px dashed var(--line); border-radius: 14px; text-align: center; }
+.hc-stats dd { position: relative; margin: 0; }
+.hc-stats dd span { position: absolute; left: 100%; top: 0; font-size: 0.5em; margin-left: 0.1em; }
+.help-center .hc-footnote { font-family: var(--mono); font-size: 0.75rem; letter-spacing: 0.02em; color: var(--ink-soft); opacity: 0.85; margin-top: -0.5rem; }
+.hc-stats dd { color: var(--green); font-family: var(--display); font-size: clamp(1.8rem, 4vw, 2.4rem); font-weight: 800; letter-spacing: -0.03em; line-height: 1; }
+.hc-stats dt { color: var(--ink-soft); font-size: 0.95rem; }
+.hc-note { font-size: 0.9rem; margin-top: -0.4rem; }
 .video-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.4rem; max-width: 60rem; }
 .video h2 { font-size: 1.3rem; }
 .video-frame { aspect-ratio: 16 / 9; border-radius: 12px; overflow: hidden; background: var(--green-deep); }
